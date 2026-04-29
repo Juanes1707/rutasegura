@@ -1,0 +1,12 @@
+{
+  "name": "RutaSegura AI",
+  "description": "Capa de inteligencia artificial para movilidad segura en Bogotá, prediciendo riesgos urbanos en tiempo real.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "Predictive Safety Analysis",
+    "Real-time Incident Reporting",
+    "Dynamic Risk Routing"
+  ]
+}

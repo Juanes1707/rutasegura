@@ -1,0 +1,46 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  --color-brand-cyan: #00ff9d;
+  --color-brand-blue: #00c2ff;
+  --color-risk-high: #ff1744;
+  --color-risk-medium: #ffc107;
+  --color-risk-low: #00e676;
+}
+
+@layer base {
+  body {
+    @apply bg-[#07111f] text-white overflow-hidden;
+  }
+}
+
+.glass-panel {
+  @apply bg-[#07111fb2] backdrop-blur-md border border-white/10;
+}
+
+/* Custom Leaflet Controls Styling */
+.leaflet-container {
+  @apply w-full h-full bg-transparent!;
+}
+
+.leaflet-routing-container {
+  @apply hidden!;
+}
+
+/* Custom Scrollbar for Sidebar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-white/20;
+}
