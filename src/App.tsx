@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Shield, MapPin, Clock, AlertTriangle, Navigation, Zap, Car, Bike, User, Activity,
   Info, RefreshCw, Eye, Lightbulb, MessageSquare, ExternalLink, Search, X, Route,
-  TrendingDown, TrendingUp,
+  TrendingDown, TrendingUp, CheckCircle2,
 } from 'lucide-react';
 import { SafetyMap } from './components/Map';
 import { INITIAL_RISK_ZONES, BOGOTA_CENTER } from './constants';
@@ -36,6 +36,7 @@ export default function App() {
   const [destCoords, setDestCoords] = useState<[number, number] | null>(null);
   const [showOriginSug, setShowOriginSug] = useState(false);
   const [showDestSug, setShowDestSug] = useState(false);
+  const [reportSuccessOpen, setReportSuccessOpen] = useState(false);
 
   const lastPosRef = useRef<{ lat: number; lng: number; time: number } | null>(null);
   const destInputRef = useRef<HTMLInputElement>(null);
@@ -164,7 +165,7 @@ export default function App() {
       return z;
     }));
     setReportingType(null); setReportComment('');
-    alert('Reporte enviado. La red comunitaria ha sido notificada.');
+    setReportSuccessOpen(true);
   };
 
   const currentRisk = activeRoute?.riskScore ?? calculateDynamicRiskScore(vehicle, timeMode, priority);
@@ -201,6 +202,45 @@ export default function App() {
                   </div>
                 ))}
               </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {reportSuccessOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[2100] flex items-center justify-center bg-[#07111fcc] p-6 backdrop-blur-md"
+            onClick={() => setReportSuccessOpen(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="report-success-title"
+          >
+            <motion.div
+              initial={{ scale: 0.94, y: 16 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.96, y: 10 }}
+              onClick={e => e.stopPropagation()}
+              className="glass-panel w-full max-w-sm rounded-2xl p-6 text-center shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
+            >
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-cyan/15 text-brand-cyan">
+                <CheckCircle2 size={30} />
+              </div>
+              <h2 id="report-success-title" className="mb-2 text-lg font-black uppercase tracking-wide text-white">
+                Reporte enviado
+              </h2>
+              <p className="mb-5 text-sm leading-relaxed text-slate-300">
+                La red comunitaria ha sido notificada y el mapa actualizará el riesgo de la zona.
+              </p>
+              <button
+                onClick={() => setReportSuccessOpen(false)}
+                className="w-full rounded-xl bg-linear-to-r from-brand-cyan to-brand-blue px-4 py-3 text-xs font-black uppercase tracking-widest text-black transition-all hover:scale-[1.02] active:scale-95"
+              >
+                Entendido
+              </button>
             </motion.div>
           </motion.div>
         )}
